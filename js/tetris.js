@@ -55,6 +55,7 @@ function startGame() {
   }, 1000);
 }
 function shapeFall(currentShape) {
+  console.log(Math.floor(Math.random() * shapes.length));
   currentShapePos[0] += 1;
   for (let i = 0; i < currentShape.length; i++) {
     currentShape[i].y += cellSize;
@@ -62,7 +63,7 @@ function shapeFall(currentShape) {
 }
 // function for froping shape
 function dropShape() {
-  let curIdx = Math.floor(Math.random()) % shapes.length;
+  let curIdx = Math.floor(Math.random() * shapes.length);
   let currentShapeData = shapes[curIdx];
   let len = currentShapeData.length;
   let currentShape = [];
