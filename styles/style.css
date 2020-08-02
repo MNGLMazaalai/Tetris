@@ -10,6 +10,7 @@ body {
 }
 
 canvas {
-  margin-left: calc(50% - 225pt);
+  border: #393939 5pt solid;
+  margin-left: calc(50% - 100pt);
   margin-top: 10vh;
 }
