@@ -1,7 +1,9 @@
 const cellSize = 25,
   width = 10,
-  height = 20,
-  currentShapePos = [];
+  height = 20;
+let currentShapePos,
+  gameBoardData = []; // y, x
+
 import { shapes } from './shapes.js';
 // require('pixi-layers');
 let app = new PIXI.Application({
@@ -42,16 +44,29 @@ function renderSprite(width, height, x, y, texture) {
 
 //function for starting game
 function startGame() {
-  dropShape();
+  let tmp = [];
+  for (let i = 0; i < 10; i++) tmp.push(0);
+  for (let i = 0; i < 20; i++) gameBoardData.push(tmp);
+  // console.log(gameBoardData);
+  let currentShape = dropShape();
+  // shapeFall(currentShape);
+  return setInterval(function () {
+    shapeFall(currentShape);
+  }, 1000);
 }
-
+function shapeFall(currentShape) {
+  currentShapePos[0] += 1;
+  for (let i = 0; i < currentShape.length; i++) {
+    currentShape[i].y += cellSize;
+  }
+}
 // function for froping shape
 function dropShape() {
   let curIdx = Math.floor(Math.random()) % shapes.length;
   let currentShapeData = shapes[curIdx];
-  let currentShape = [];
-  let currentShapePos = [-2, 3]; // y, x
   let len = currentShapeData.length;
+  let currentShape = [];
+  currentShapePos = [-2, 3];
   for (let i = 0; i < len; i++) {
     for (let j = 0; j < len; j++) {
       if (currentShapeData[i][j] == 0) continue;
