@@ -38,7 +38,6 @@ let game = startGame();
 // render function for sprite with texture
 function renderSprite(width, height, x, y, texture) {
   const sprite = new PIXI.Sprite(texture);
-  sprite.zIndex = -1;
   sprite.width = width;
   sprite.height = height;
   sprite.x = x;
@@ -109,6 +108,7 @@ function checkDestroy() {
     }
   }
 }
+// add current shape to board
 function addCurrentShape(currentShape) {
   for (let i = 0; i < currentShape.length; i++) {
     let x = currentShape[i].x / cellSize;
@@ -184,7 +184,6 @@ function addShape() {
 }
 // function for rotating shapes
 function rotateShape() {
-  let copyData = currentShapeData;
   let len = currentShapeData.length;
   for (let i = 0; i < currentShape.length; i++) {
     let x = currentShape[i].x / cellSize - currentShapePos[1];
@@ -214,6 +213,7 @@ function rotateShape() {
     currentShape[i].x = (len - 1 - y + currentShapePos[1]) * cellSize;
   }
 }
+// function for moving current shape left
 function moveLeft() {
   for (let i = 0; i < currentShape.length; i++) {
     let x = currentShape[i].x / cellSize;
@@ -226,6 +226,7 @@ function moveLeft() {
     currentShape[i].x -= cellSize;
   }
 }
+// function for moving current shape left
 function moveRight() {
   for (let i = 0; i < currentShape.length; i++) {
     let x = currentShape[i].x / cellSize;
