@@ -245,7 +245,6 @@ function moveRight() {
 // keyboard event handle
 function checkKey(e) {
   e = e || window.event;
-  let cur;
   if (e.keyCode != 32 && (e.keyCode < 37 || e.keyCode > 40)) return;
   if (e.keyCode == 32) {
     while (checkFall()) {
