@@ -21,6 +21,7 @@ const gameBoard = new PIXI.Container();
 const cellTexture = PIXI.Texture.from('assets/cell.png');
 
 app.stage.addChild(gameBoard);
+
 window.addEventListener('keydown', checkKey);
 // document.body.onkeydown = checkKey;
 
@@ -40,6 +41,7 @@ let game = startGame();
 // render function for sprite with texture
 function renderSprite(width, height, x, y, texture) {
   const sprite = new PIXI.Sprite(texture);
+  sprite.zIndex = -1;
   sprite.width = width;
   sprite.height = height;
   sprite.x = x;
@@ -73,7 +75,6 @@ function checkFall() {
 // function for finishing game
 function gameOver() {
   alert("Game over!!!");
-  document.body.onkeydown = null;
   clearInterval(game);
 
 }
@@ -111,7 +112,6 @@ function checkDestroy() {
     }
   }
 }
-// add current shape to board
 function addCurrentShape(currentShape) {
   for (let i = 0; i < currentShape.length; i++) {
     let x = currentShape[i].x / cellSize;
@@ -132,6 +132,7 @@ function dropShape() {
   }
   oneSave = 0;
   addCurrentShape(currentShape);
+  checkDestroy();
   currentShape = addShape();
 }
 //make shape fall one grid
@@ -182,11 +183,11 @@ function addShape() {
       gameBoard.addChild(currentShapeCell);
     }
   }
-  drawShadow(newCurrentShape);
   return newCurrentShape;
 }
 // function for rotating shapes
 function rotateShape() {
+  let copyData = currentShapeData;
   let len = currentShapeData.length;
   for (let i = 0; i < currentShape.length; i++) {
     let x = currentShape[i].x / cellSize - currentShapePos[1];
@@ -216,7 +217,6 @@ function rotateShape() {
     currentShape[i].x = (len - 1 - y + currentShapePos[1]) * cellSize;
   }
 }
-// function for moving current shape left
 function moveLeft() {
   for (let i = 0; i < currentShape.length; i++) {
     let x = currentShape[i].x / cellSize;
@@ -229,7 +229,6 @@ function moveLeft() {
     currentShape[i].x -= cellSize;
   }
 }
-// function for moving current shape left
 function moveRight() {
   for (let i = 0; i < currentShape.length; i++) {
     let x = currentShape[i].x / cellSize;
@@ -245,6 +244,7 @@ function moveRight() {
 // keyboard event handle
 function checkKey(e) {
   e = e || window.event;
+  let cur;
   if (e.keyCode != 32 && (e.keyCode < 37 || e.keyCode > 40)) return;
   if (e.keyCode == 32) {
     while (checkFall()) {
