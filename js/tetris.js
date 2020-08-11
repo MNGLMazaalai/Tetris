@@ -21,7 +21,8 @@ const gameBoard = new PIXI.Container();
 const cellTexture = PIXI.Texture.from('assets/cell.png');
 
 app.stage.addChild(gameBoard);
-document.body.onkeydown = checkKey;
+window.addEventListener('keydown', checkKey);
+// document.body.onkeydown = checkKey;
 
 // draw game board
 for (let i = 0; i < width * height; i++) {
@@ -32,6 +33,7 @@ for (let i = 0; i < width * height; i++) {
     Math.floor(i / width) * cellSize,
     cellTexture
   );
+  boardCell.alpha = 0.1;
   gameBoard.addChild(boardCell);
 }
 let game = startGame();
@@ -71,6 +73,7 @@ function checkFall() {
 // function for finishing game
 function gameOver() {
   alert("Game over!!!");
+  document.body.onkeydown = null;
   clearInterval(game);
 
 }
@@ -129,7 +132,6 @@ function dropShape() {
   }
   oneSave = 0;
   addCurrentShape(currentShape);
-  checkDestroy();
   currentShape = addShape();
 }
 //make shape fall one grid
@@ -180,6 +182,7 @@ function addShape() {
       gameBoard.addChild(currentShapeCell);
     }
   }
+  drawShadow(newCurrentShape);
   return newCurrentShape;
 }
 // function for rotating shapes
